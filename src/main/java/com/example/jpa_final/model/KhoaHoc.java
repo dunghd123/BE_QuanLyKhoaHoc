@@ -16,22 +16,22 @@ public class KhoaHoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int KhoahocID;
-    @Column(name = "tenkhoahoc")
+    @Column(name = "tenkhoahoc",nullable = false)
     @Size(max = 50,message = "ten loai khong qua 50 ky tu")
     private String Tenkhoahoc;
-    @Column(name = "thoigianhoc")
+    @Column(name = "thoigianhoc",nullable = false)
     private int Thoigianhoc;
-    @Column(name = "gioithieu")
+    @Column(name = "gioithieu",nullable = false)
     private String Gioithieu;
-    @Column(name = "noidung")
+    @Column(name = "noidung",nullable = false)
     private String Noidung;
-    @Column(name = "hocphi")
+    @Column(name = "hocphi",nullable = false)
     private float Hocphi;
-    @Column(name = "sohocvien")
+    @Column(name = "sohocvien",nullable = false)
     private int Sohocvien;
-    @Column(name = "soluongmon")
+    @Column(name = "soluongmon",nullable = false)
     private int Soluongmon;
-    @Column(name = "hinhanh")
+    @Column(name = "hinhanh",nullable = false)
     private String Hinhanh;
 
     //khoa ngoai den bang loaikhoahoc
