@@ -2,7 +2,7 @@ package com.example.jpa_final.services;
 
 import com.example.jpa_final.model.BaiViet;
 import com.example.jpa_final.model.DangKyHoc;
-import com.example.jpa_final.model.QuyenHan;
+
 import com.example.jpa_final.model.TaiKhoan;
 import com.example.jpa_final.repo.IBaivietRep;
 import com.example.jpa_final.repo.IDangkyRep;
