@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/khoahoc")
 public class KhoahocController {
@@ -27,4 +29,21 @@ public class KhoahocController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("sua that bai khoa hoc co id: "+khoaHoc.getKhoahocID());
     }
+    @DeleteMapping(value = "xoakhoahoc")
+    public ResponseEntity<?> xoaKH(@RequestParam int khid){
+        if(khServices.xoaKhoaHoc(khid)){
+            return ResponseEntity.ok("xoa thanh cong khoa hoc co id: "+khid);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai khoa hoc co id: "+khid);
+    }
+    @GetMapping(value = "hienthidanhsachkhoahoc")
+    public List<KhoaHoc> hienThiDS(@RequestParam int pagenum){
+        return khServices.hienthiDS(pagenum);
+    }
+    @GetMapping(value = "timkiemtheotenkhoahoc")
+        public List<KhoaHoc> timKiemTheoTenKH(@RequestParam String tenkh, @RequestParam int pagenum){
+        return khServices.timkiemtheoTenKH(tenkh,pagenum);
+    }
+
+
 }

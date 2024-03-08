@@ -1,6 +1,7 @@
 package com.example.jpa_final.services;
 
 import com.example.jpa_final.model.BaiViet;
+import com.example.jpa_final.model.DangKyHoc;
 import com.example.jpa_final.model.KhoaHoc;
 import com.example.jpa_final.model.LoaiKhoaHoc;
 import com.example.jpa_final.repo.IDangkyRep;
@@ -11,6 +12,8 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +31,22 @@ public class KhoahocServices {
     ValidatorFactory valFac= Validation.buildDefaultValidatorFactory();
     Validator val= valFac.getValidator();
 
+    public static int demHocVien(int khoahocid,List<DangKyHoc> list){
+        int dem=0;
+        for(DangKyHoc dk: list){
+            if(dk.getKhoaHoc().getKhoahocID()==khoahocid
+                && (dk.getTinhTrangHoc().getTentinhtrang().equals("Học xong")
+                || dk.getTinhTrangHoc().getTentinhtrang().equals("Đang học chính")
+                || dk.getTinhTrangHoc().getTentinhtrang().equals("Chưa hoàn thành"))){
+                dem++;
+            }
+        }
+        return dem;
+    }
+
     public boolean themKhoahoc(KhoaHoc khoaHoc){
         boolean check=true;
+        khoaHoc.setSohocvien(0);
         Set<ConstraintViolation<KhoaHoc>> violationSet= val.validate(khoaHoc);
         violationSet.forEach(x->{
             System.out.println(x.getMessage());
@@ -54,7 +71,7 @@ public class KhoahocServices {
         khCurrent.setGioithieu(khoaHoc.getGioithieu());
         khCurrent.setNoidung(khoaHoc.getNoidung());
         khCurrent.setHocphi(khoaHoc.getHocphi());
-        khCurrent.setSohocvien(khoaHoc.getSohocvien());
+        khCurrent.setSohocvien(demHocVien(khoaHoc.getKhoahocID(), dangkyRep.findAll()));
         khCurrent.setSoluongmon(khoaHoc.getSoluongmon());
         khCurrent.setLoaiKhoaHoc(khoaHoc.getLoaiKhoaHoc());
         Set<ConstraintViolation<KhoaHoc>> violationSet= val.validate(khoaHoc);
@@ -71,5 +88,28 @@ public class KhoahocServices {
             }
         }
         return check;
+    }
+    public boolean xoaKhoaHoc(int khoahocid){
+        boolean check= true;
+        Optional<KhoaHoc> op= Optional.empty();
+        if(khoahocRep.findById(khoahocid)==op){
+            check=false;
+        }else {
+            for(DangKyHoc dk: dangkyRep.findAll()){
+                if(dk.getKhoaHoc().getKhoahocID()==khoahocid){
+                    dangkyRep.delete(dk);
+                }
+            }
+            khoahocRep.deleteById(khoahocid);
+        }
+        return check;
+    }
+    public List<KhoaHoc> hienthiDS(int pagenum){
+        Pageable pageable= PageRequest.of(pagenum,20);
+        return khoahocRep.findAllBy(pageable);
+    }
+    public List<KhoaHoc> timkiemtheoTenKH(String ten,int pagenum){
+        Pageable pageable= PageRequest.of(pagenum,20);
+        return khoahocRep.findAllByTenkhoahocEquals(ten,pageable);
     }
 }
