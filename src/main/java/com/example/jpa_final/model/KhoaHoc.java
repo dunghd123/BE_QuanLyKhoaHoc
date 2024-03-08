@@ -15,7 +15,7 @@ import java.util.Set;
 public class KhoaHoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int KhoahocID;
+        private int KhoahocID;
     @Column(name = "tenkhoahoc",nullable = false)
     @Size(max = 50,message = "ten loai khong qua 50 ky tu")
     private String Tenkhoahoc;
