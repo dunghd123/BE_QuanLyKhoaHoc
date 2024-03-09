@@ -36,7 +36,8 @@ public class KhoahocServices {
         int dem=0;
         List<Integer> listhvid= new ArrayList<>();
         for(DangKyHoc dk: list){
-            if(list.size()==1&& (dk.getTinhTrangHoc().getTinhtranghocID()==5
+            if(list.size()==1 && dk.getKhoaHoc().getKhoahocID()==khoahocid &&
+                (dk.getTinhTrangHoc().getTinhtranghocID()==5
                 || dk.getTinhTrangHoc().getTinhtranghocID()==3
                 || dk.getTinhTrangHoc().getTinhtranghocID()==7)){
                 dem++;

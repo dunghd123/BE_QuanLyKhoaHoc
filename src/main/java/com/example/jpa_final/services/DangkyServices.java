@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -102,8 +103,79 @@ public class DangkyServices {
         }
         return check;
     }
-    public void suaDangKy(DangKyHoc dangKyHoc){
+    public boolean suaDangKy(DangKyHoc dangKyHoc){
+        boolean check=true;
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        DangKyHoc dkCurrent=dangkyRep.findById(dangKyHoc.getId()).get();
+        int dkid= dkCurrent.getId();
+        int khid=0;
+        for(DangKyHoc dk: dangkyRep.findAll()){
+            if(dk.getId()==dkid){
+                khid=dk.getKhoaHoc().getKhoahocID();
+            }
+        }
+        //set dl sua
+        DangKyHoc dkUpdate= dangkyRep.findById(dangKyHoc.getId()).get();
+        dkUpdate.setKhoaHoc(dangKyHoc.getKhoaHoc());
+        dkUpdate.setHocVien(dangKyHoc.getHocVien());
+        dkUpdate.setTinhTrangHoc(dangKyHoc.getTinhTrangHoc());
+        dkUpdate.setTaiKhoan(dangKyHoc.getTaiKhoan());
 
+        KhoaHoc khCurrent= khoahocRep.findById(khid).get();
+        KhoaHoc khUpdate= khoahocRep.findById(dkUpdate.getKhoaHoc().getKhoahocID()).get();
+        //lay id tth
+        int getIdDangHocChinh = 0;
+        for(TinhTrangHoc tt: tinhtranghocRep.findAll()){
+            if(tt.getTentinhtrang().equals("Đang học chính")){
+                getIdDangHocChinh=tt.getTinhtranghocID();
+            }
+        }
+        //set lai ngay ket thuc
+        dkUpdate.setNgaydangky(date);
+        if(dkUpdate.getTinhTrangHoc().getTinhtranghocID()==getIdDangHocChinh){
+            dkUpdate.setNgaybatdau(date);
+        }else {
+            dkUpdate.setNgaybatdau(null);
+        }
+        if(dkUpdate.getNgaybatdau()!=null){
+            dkUpdate.setNgayketthuc(tinhNgayKetThuc(dkUpdate.getNgaybatdau(), khUpdate.getThoigianhoc()));
+        }else {
+            dangKyHoc.setNgayketthuc(null);
+        }
+        if(dangkyRep.findAll().size()==1){
+            Set<ConstraintViolation<DangKyHoc>> violationSet= val.validate(dangKyHoc);
+            if(violationSet.isEmpty()){
+                dangkyRep.save(dkUpdate);
+                khoahocServices.suaKhoaHoc(khUpdate);
+                khoahocServices.suaKhoaHoc(khCurrent);
+            }
+        }else {
+            List<DangKyHoc> list= new ArrayList<>();
+            for(DangKyHoc dk: dangkyRep.findAll()){
+                if(dk.getId()!=dkUpdate.getId()){
+                    list.add(dk);
+                }
+            }
+            boolean checkTKHV=true;
+            for(DangKyHoc dk: list){
+                if(dkUpdate.getHocVien().getHocvienID()==dk.getHocVien().getHocvienID()
+                        && dkUpdate.getTaiKhoan().getTaikhoanid() == dk.getTaiKhoan().getTaikhoanid()){
+                    checkTKHV=false;
+                    check=false;
+                    break;
+                }
+            }
+            if(checkTKHV && check){
+                Set<ConstraintViolation<DangKyHoc>> violationSet= val.validate(dangKyHoc);
+                if(violationSet.isEmpty()){
+                    dangkyRep.save(dkUpdate);
+                    khoahocServices.suaKhoaHoc(khUpdate);
+                    khoahocServices.suaKhoaHoc(khCurrent);
+                }
+            }
+        }
+        return check;
     }
     public boolean xoaDangKyHoc(int id){
         boolean check= true;

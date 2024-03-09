@@ -21,6 +21,13 @@ public class DangkyController {
         }
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("them that bai!!!!");
     }
+    @PutMapping(value = "suadangkyhoc")
+    public ResponseEntity<?> suaDKH(@RequestBody DangKyHoc dangKyHoc){
+        if (dkServices.suaDangKy(dangKyHoc)){
+            return ResponseEntity.ok("sua thanh cong id: "+dangKyHoc.getId());
+        }
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("sua khong thanh cong id: "+dangKyHoc.getId());
+    }
     @DeleteMapping(value = "xoadangkyhoc")
     public ResponseEntity<?> xoaDKH(@RequestParam int id){
         if (dkServices.xoaDangKyHoc(id)){
