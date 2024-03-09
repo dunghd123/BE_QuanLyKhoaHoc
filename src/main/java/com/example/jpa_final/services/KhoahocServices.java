@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,12 +34,20 @@ public class KhoahocServices {
 
     public static int demHocVien(int khoahocid,List<DangKyHoc> list){
         int dem=0;
+        List<Integer> listhvid= new ArrayList<>();
         for(DangKyHoc dk: list){
-            if(dk.getKhoaHoc().getKhoahocID()==khoahocid
-                && (dk.getTinhTrangHoc().getTentinhtrang().equals("Học xong")
-                || dk.getTinhTrangHoc().getTentinhtrang().equals("Đang học chính")
-                || dk.getTinhTrangHoc().getTentinhtrang().equals("Chưa hoàn thành"))){
+            if(list.size()==1&& (dk.getTinhTrangHoc().getTinhtranghocID()==5
+                || dk.getTinhTrangHoc().getTinhtranghocID()==3
+                || dk.getTinhTrangHoc().getTinhtranghocID()==7)){
                 dem++;
+                listhvid.add(dk.getHocVien().getHocvienID());
+            }
+            if(dk.getKhoaHoc().getKhoahocID()==khoahocid && !listhvid.contains(dk.getHocVien().getHocvienID())
+                && (dk.getTinhTrangHoc().getTinhtranghocID()==5
+                || dk.getTinhTrangHoc().getTinhtranghocID()==3
+                || dk.getTinhTrangHoc().getTinhtranghocID()==7)){
+                dem++;
+                listhvid.add(dk.getHocVien().getHocvienID());
             }
         }
         return dem;

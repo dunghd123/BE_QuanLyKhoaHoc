@@ -3,9 +3,11 @@ package com.example.jpa_final.services;
 import com.example.jpa_final.model.BaiViet;
 import com.example.jpa_final.model.DangKyHoc;
 
+import com.example.jpa_final.model.KhoaHoc;
 import com.example.jpa_final.model.TaiKhoan;
 import com.example.jpa_final.repo.IBaivietRep;
 import com.example.jpa_final.repo.IDangkyRep;
+import com.example.jpa_final.repo.IKhoahocRep;
 import com.example.jpa_final.repo.ITaikhoanRep;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -31,6 +33,10 @@ public class TaikhoanServices {
     IDangkyRep dangkyRep;
     @Autowired
     IBaivietRep baivietRep;
+    @Autowired
+    IKhoahocRep khoahocRep;
+    @Autowired
+    KhoahocServices khoahocServices;
     ValidatorFactory valFac= Validation.buildDefaultValidatorFactory();
     Validator val= valFac.getValidator();
     public static boolean isPasswordValid(String password) {
@@ -104,8 +110,11 @@ public class TaikhoanServices {
             check=false;
         }else {
             for(DangKyHoc dk: dangkyRep.findAll()){
+                int khid=dk.getKhoaHoc().getKhoahocID();
+                KhoaHoc kh= khoahocRep.findById(khid).get();
                 if(dk.getTaiKhoan().getTaikhoanid()==taikhoanid){
                     dangkyRep.delete(dk);
+                    khoahocServices.suaKhoaHoc(kh);
                 }
             }
             for(BaiViet bv: baivietRep.findAll()){
