@@ -179,14 +179,15 @@ public class DangkyServices {
     }
     public boolean xoaDangKyHoc(int id){
         boolean check= true;
-        int khid;
-        DangKyHoc dk= dangkyRep.findById(id).get();
-        khid=dk.getKhoaHoc().getKhoahocID();
-        KhoaHoc kh= khoahocRep.findById(khid).get();
+
         Optional<DangKyHoc> op= Optional.empty();
         if(dangkyRep.findById(id)==op){
             check=false;
         }else {
+            int khid;
+            DangKyHoc dk= dangkyRep.findById(id).get();
+            khid=dk.getKhoaHoc().getKhoahocID();
+            KhoaHoc kh= khoahocRep.findById(khid).get();
             dangkyRep.deleteById(id);
             khoahocServices.suaKhoaHoc(kh);
         }

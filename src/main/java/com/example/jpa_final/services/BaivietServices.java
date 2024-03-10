@@ -42,25 +42,36 @@ public class BaivietServices {
             baivietRep.save(baiViet);
         }
     }
-    public void suaBaiViet(BaiViet baiViet){
+    public boolean suaBaiViet(BaiViet baiViet){
+        boolean check=true;
+        Optional<BaiViet> op= Optional.empty();
+
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
-        BaiViet baiVietCurrent= baivietRep.findById(baiViet.getBaivietID()).get();
-        baiVietCurrent.setTenbaiviet(baiViet.getTenbaiviet());
-        baiVietCurrent.setTentacgia(baiViet.getTentacgia());
-        baiVietCurrent.setNoidung(baiViet.getNoidung());
-        baiVietCurrent.setNoidungngan(baiViet.getNoidungngan());
-        baiVietCurrent.setHinhanh(baiViet.getHinhanh());
-        baiVietCurrent.setChuDe(baiViet.getChuDe());
-        baiVietCurrent.setTaiKhoan(baiViet.getTaiKhoan());
-        baiVietCurrent.setThoigiantao(date);
-        Set<ConstraintViolation<BaiViet>> violationSet= val.validate(baiVietCurrent);
-        violationSet.forEach(x->{
-            System.out.println(x.getMessage());
-        });
-        if(violationSet.isEmpty()){
-            baivietRep.save(baiVietCurrent);
+        if(baivietRep.findById(baiViet.getBaivietID())==op){
+            check=false;
         }
+        else {
+            BaiViet baiVietCurrent= baivietRep.findById(baiViet.getBaivietID()).get();
+            baiVietCurrent.setTenbaiviet(baiViet.getTenbaiviet());
+            baiVietCurrent.setTentacgia(baiViet.getTentacgia());
+            baiVietCurrent.setNoidung(baiViet.getNoidung());
+            baiVietCurrent.setNoidungngan(baiViet.getNoidungngan());
+            baiVietCurrent.setHinhanh(baiViet.getHinhanh());
+            baiVietCurrent.setChuDe(baiViet.getChuDe());
+            baiVietCurrent.setTaiKhoan(baiViet.getTaiKhoan());
+            baiVietCurrent.setThoigiantao(date);
+            Set<ConstraintViolation<BaiViet>> violationSet= val.validate(baiVietCurrent);
+            violationSet.forEach(x->{
+                System.out.println(x.getMessage());
+            });
+            if(violationSet.isEmpty()){
+                baivietRep.save(baiVietCurrent);
+                check=true;
+            }
+        }
+
+        return check;
     }
     public boolean xoaBaiViet(int baivietid){
         boolean check= true;

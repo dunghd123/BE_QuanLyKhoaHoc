@@ -19,8 +19,11 @@ public class BaivietController {
         bvServices.themBaiViet(baiViet);
     }
     @PutMapping(value = "suabaiviet")
-    public void suaBV(@RequestBody BaiViet baiViet){
-        bvServices.suaBaiViet(baiViet);
+    public ResponseEntity<?> suaBV(@RequestBody BaiViet baiViet){
+        if(bvServices.suaBaiViet(baiViet)){
+            return ResponseEntity.ok("sua thanh cong bai viet co id: "+baiViet.getBaivietID());
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai bai biet co id: "+baiViet.getBaivietID());
     }
     @DeleteMapping (value = "xoabaiviet")
     public ResponseEntity<?> xoaBV(@RequestParam int baivietid){

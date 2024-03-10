@@ -37,16 +37,16 @@ public class KhoahocServices {
         List<Integer> listhvid= new ArrayList<>();
         for(DangKyHoc dk: list){
             if(list.size()==1 && dk.getKhoaHoc().getKhoahocID()==khoahocid &&
-                (dk.getTinhTrangHoc().getTinhtranghocID()==5
+                (dk.getTinhTrangHoc().getTinhtranghocID()==2
                 || dk.getTinhTrangHoc().getTinhtranghocID()==3
-                || dk.getTinhTrangHoc().getTinhtranghocID()==7)){
+                || dk.getTinhTrangHoc().getTinhtranghocID()==4)){
                 dem++;
                 listhvid.add(dk.getHocVien().getHocvienID());
             }
             if(dk.getKhoaHoc().getKhoahocID()==khoahocid && !listhvid.contains(dk.getHocVien().getHocvienID())
-                && (dk.getTinhTrangHoc().getTinhtranghocID()==5
+                && (dk.getTinhTrangHoc().getTinhtranghocID()==2
                 || dk.getTinhTrangHoc().getTinhtranghocID()==3
-                || dk.getTinhTrangHoc().getTinhtranghocID()==7)){
+                || dk.getTinhTrangHoc().getTinhtranghocID()==4)){
                 dem++;
                 listhvid.add(dk.getHocVien().getHocvienID());
             }

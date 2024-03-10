@@ -120,31 +120,37 @@ public class HocvienServices {
 
     public boolean suaHocVien(HocVien hocVien){
         boolean check= false;
-        HocVien hvCurrent= hocvienRep.findById(hocVien.getHocvienID()).get();
-        hvCurrent.setHoten(formatName(hocVien.getHoten()));
-        hvCurrent.setHinhanh(hocVien.getHinhanh());
-        hvCurrent.setNgaysinh(hocVien.getNgaysinh());
-        hvCurrent.setEmail(hocVien.getEmail());
-        hvCurrent.setSodienthoai(hocVien.getSodienthoai());
-        hvCurrent.setTinhthanh(hocVien.getTinhthanh());
-        hvCurrent.setQuanhuyen(hocVien.getQuanhuyen());
-        hvCurrent.setPhuongxa(hocVien.getPhuongxa());
-        hvCurrent.setSonha(hocVien.getSonha());
-        List<HocVien> list= new ArrayList<>();
-        for(HocVien hv: hocvienRep.findAll()){
-            if(hv.getHocvienID()!= hocVien.getHocvienID()){
-                list.add(hv);
+        Optional<HocVien> op= Optional.empty();
+        if(hocvienRep.findById(hocVien.getHocvienID())==op){
+            check=false;
+        }else {
+            HocVien hvCurrent= hocvienRep.findById(hocVien.getHocvienID()).get();
+            hvCurrent.setHoten(formatName(hocVien.getHoten()));
+            hvCurrent.setHinhanh(hocVien.getHinhanh());
+            hvCurrent.setNgaysinh(hocVien.getNgaysinh());
+            hvCurrent.setEmail(hocVien.getEmail());
+            hvCurrent.setSodienthoai(hocVien.getSodienthoai());
+            hvCurrent.setTinhthanh(hocVien.getTinhthanh());
+            hvCurrent.setQuanhuyen(hocVien.getQuanhuyen());
+            hvCurrent.setPhuongxa(hocVien.getPhuongxa());
+            hvCurrent.setSonha(hocVien.getSonha());
+            //lay danh sach khong chua id truyen vao
+            List<HocVien> list= new ArrayList<>();
+            for(HocVien hv: hocvienRep.findAll()){
+                if(hv.getHocvienID()!= hocVien.getHocvienID()){
+                    list.add(hv);
+                }
             }
-        }
-        Set<ConstraintViolation<HocVien>> violationSet= val.validate(hocVien);
-        violationSet.forEach(x->{
-            System.out.println(x.getMessage());
-        });
-        if(violationSet.isEmpty()){
-            if(isValidPhoneNumber(hvCurrent.getSodienthoai()) && isEmailValid(hvCurrent.getEmail())){
-                if(checkSDT(hvCurrent.getSodienthoai(),list) && checkEmail(hvCurrent.getEmail(),list)){
-                    check=true;
-                    hocvienRep.save(hvCurrent);
+            Set<ConstraintViolation<HocVien>> violationSet= val.validate(hocVien);
+            violationSet.forEach(x->{
+                System.out.println(x.getMessage());
+            });
+            if(violationSet.isEmpty()){
+                if(isValidPhoneNumber(hvCurrent.getSodienthoai()) && isEmailValid(hvCurrent.getEmail())){
+                    if(checkSDT(hvCurrent.getSodienthoai(),list) && checkEmail(hvCurrent.getEmail(),list)){
+                        check=true;
+                        hocvienRep.save(hvCurrent);
+                    }
                 }
             }
         }

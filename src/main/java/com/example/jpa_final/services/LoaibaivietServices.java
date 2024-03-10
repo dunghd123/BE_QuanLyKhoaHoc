@@ -36,18 +36,26 @@ public class LoaibaivietServices {
             loaibvRep.save(loaiBaiViet);
         }
     }
-    public void suaLoaiBaiViet(LoaiBaiViet loaiBaiViet){
-        LoaiBaiViet loaibvCurrent= loaibvRep.findById(loaiBaiViet.getLoaibaivietID()).get();
-        loaibvCurrent.setTenloai(loaiBaiViet.getTenloai());
-        ValidatorFactory valFac= Validation.buildDefaultValidatorFactory();
-        Validator val= valFac.getValidator();
-        Set<ConstraintViolation<LoaiBaiViet>> violationSet= val.validate(loaibvCurrent);
-        violationSet.forEach(x->{
-            System.out.println(x.getMessage());
-        });
-        if(violationSet.isEmpty()){
-            loaibvRep.save(loaibvCurrent);
+    public boolean suaLoaiBaiViet(LoaiBaiViet loaiBaiViet){
+        boolean check=true;
+        Optional<LoaiBaiViet> op=Optional.empty();
+        if(loaibvRep.findById(loaiBaiViet.getLoaibaivietID())==op){
+            check=false;
         }
+        else {
+            LoaiBaiViet loaibvCurrent= loaibvRep.findById(loaiBaiViet.getLoaibaivietID()).get();
+            loaibvCurrent.setTenloai(loaiBaiViet.getTenloai());
+            ValidatorFactory valFac= Validation.buildDefaultValidatorFactory();
+            Validator val= valFac.getValidator();
+            Set<ConstraintViolation<LoaiBaiViet>> violationSet= val.validate(loaibvCurrent);
+            violationSet.forEach(x->{
+                System.out.println(x.getMessage());
+            });
+            if(violationSet.isEmpty()){
+                loaibvRep.save(loaibvCurrent);
+            }
+        }
+        return check;
     }
     public boolean xoaLoaiBaiViet(int loaibaivietid){
         boolean check=true;

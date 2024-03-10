@@ -21,8 +21,11 @@ public class LoaibvController {
         loaibvServices.themLoaiBaiViet(loaiBaiViet);
     }
     @PutMapping(value = "sualoaibaiviet")
-    public void suaLBV(@RequestBody LoaiBaiViet loaiBaiViet){
-        loaibvServices.suaLoaiBaiViet(loaiBaiViet);
+    public ResponseEntity<?> suaLBV(@RequestBody LoaiBaiViet loaiBaiViet){
+        if (loaibvServices.suaLoaiBaiViet(loaiBaiViet)){
+               return ResponseEntity.ok("sua thanh cong loai bai viet co id: "+loaiBaiViet.getLoaibaivietID());
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai loai bai viet co id: "+loaiBaiViet.getLoaibaivietID());
     }
     @DeleteMapping(value = "xoaloaibaiviet")
     public ResponseEntity<?> xoaLBV(@RequestParam int loaibaivietid){

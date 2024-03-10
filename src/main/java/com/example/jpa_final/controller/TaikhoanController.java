@@ -17,8 +17,11 @@ public class TaikhoanController {
     TaikhoanServices tkServices;
 
     @PostMapping(value = "themtaikhoan")
-    public void themTK(@RequestBody TaiKhoan taiKhoan){
-        tkServices.themTaiKhoan(taiKhoan);
+    public ResponseEntity<?> themTK(@RequestBody TaiKhoan taiKhoan){
+        if (tkServices.themTaiKhoan(taiKhoan)){
+            return ResponseEntity.ok("them thanh cong!!");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("them that bai!!!");
     }
     @PutMapping(value = "suataikhoan")
     public ResponseEntity<?> suaTK(@RequestBody TaiKhoan taiKhoan){

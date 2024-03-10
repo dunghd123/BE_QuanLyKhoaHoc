@@ -60,7 +60,8 @@ public class TaikhoanServices {
         }
         return check;
     }
-    public void themTaiKhoan(TaiKhoan taiKhoan){
+    public boolean themTaiKhoan(TaiKhoan taiKhoan){
+        boolean check=false;
         Set<ConstraintViolation<TaiKhoan>> violationSet= val.validate(taiKhoan);
         violationSet.forEach(x->{
             System.out.println(x.getMessage());
@@ -69,14 +70,17 @@ public class TaikhoanServices {
             if(taikhoanRep.findAll().isEmpty()){
                 if(isPasswordValid(taiKhoan.getMatkhau())){
                     taikhoanRep.save(taiKhoan);
+                    check=true;
                 }
             }else {
                 List<TaiKhoan> list= new ArrayList<>(taikhoanRep.findAll());
                 if(isUsernameValid(taiKhoan.getTendangnhap(), list) && isPasswordValid(taiKhoan.getMatkhau())){
                     taikhoanRep.save(taiKhoan);
+                    check=true;
                 }
             }
         }
+        return check;
     }
     public boolean suaTaiKhoan(TaiKhoan taiKhoan){
         boolean check=false;
