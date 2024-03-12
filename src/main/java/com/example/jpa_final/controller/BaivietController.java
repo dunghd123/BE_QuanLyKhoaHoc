@@ -33,11 +33,11 @@ public class BaivietController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai bai viet co ma: "+baivietid);
     }
     @GetMapping(value = "hienthidanhsachbaiviet")
-    public List<BaiViet> hienThiDsBv(@RequestParam int pagenum){
-        return bvServices.danhSachBaiviet(pagenum);
+    public List<BaiViet> hienThiDsBv(@RequestParam int pagenum,@RequestParam int pagesize){
+        return bvServices.danhSachBaiviet(pagenum,pagesize);
     }
     @GetMapping(value = "timkiemtheotenbaiviet")
-    public List<BaiViet> findByTenbv(@RequestParam String tenbv, @RequestParam int pagenum){
-        return bvServices.timKiemTheoTenBaiViet(tenbv, pagenum);
+    public List<BaiViet> findByTenbv(@RequestParam String tenbv, @RequestParam int pagenum,@RequestParam int pagesize){
+        return bvServices.timKiemTheoTenBaiViet(tenbv, pagenum,pagesize);
     }
 }

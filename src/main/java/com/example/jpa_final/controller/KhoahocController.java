@@ -37,12 +37,12 @@ public class KhoahocController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai khoa hoc co id: "+khid);
     }
     @GetMapping(value = "hienthidanhsachkhoahoc")
-    public List<KhoaHoc> hienThiDS(@RequestParam int pagenum){
-        return khServices.hienthiDS(pagenum);
+    public List<KhoaHoc> hienThiDS(@RequestParam int pagenum, @RequestParam int pagesize){
+        return khServices.hienthiDS(pagenum,pagesize);
     }
     @GetMapping(value = "timkiemtheotenkhoahoc")
-        public List<KhoaHoc> timKiemTheoTenKH(@RequestParam String tenkh, @RequestParam int pagenum){
-        return khServices.timkiemtheoTenKH(tenkh,pagenum);
+        public List<KhoaHoc> timKiemTheoTenKH(@RequestParam String tenkh, @RequestParam int pagenum,@RequestParam int pagesize){
+        return khServices.timkiemtheoTenKH(tenkh,pagenum,pagesize);
     }
 
 

@@ -76,8 +76,8 @@ public class TinhtranghocServices {
         }
         return check;
     }
-    public List<TinhTrangHoc> hienThiDS(int pagenum){
-        Pageable pageable= PageRequest.of(pagenum,20);
+    public List<TinhTrangHoc> hienThiDS(int pagenum, int pagesize){
+        Pageable pageable= PageRequest.of(pagenum,pagesize);
         return tinhtranghocRep.findAllBy(pageable);
     }
 }

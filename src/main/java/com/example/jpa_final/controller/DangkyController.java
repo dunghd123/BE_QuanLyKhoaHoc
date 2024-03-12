@@ -36,8 +36,8 @@ public class DangkyController {
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai id: "+id);
     }
     @GetMapping(value = "hienthidanhsachdangkyhoc")
-    public List<DangKyHoc> hienTHiDS(@RequestParam int pagenum){
-        return dkServices.hienThiDKy(pagenum);
+    public List<DangKyHoc> hienTHiDS(@RequestParam int pagenum, @RequestParam int pagesize ){
+        return dkServices.hienThiDKy(pagenum,pagesize);
     }
 
 }

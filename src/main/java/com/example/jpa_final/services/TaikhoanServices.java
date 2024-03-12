@@ -130,8 +130,8 @@ public class TaikhoanServices {
         }
         return check;
     }
-    public List<TaiKhoan> hienDsTaikhoan(int pagenum){
-        Pageable pageable= PageRequest.of(pagenum,20);
+    public List<TaiKhoan> hienDsTaikhoan(int pagenum, int pagesize){
+        Pageable pageable= PageRequest.of(pagenum,pagesize);
         return taikhoanRep.findAllBy(pageable);
     }
     public List<TaiKhoan> timkiemtheoTenDangnhap(String tendn,int pagenum){

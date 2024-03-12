@@ -72,8 +72,8 @@ public class LoaibaivietServices {
         }
         return check;
     }
-    public List<LoaiBaiViet> hienThiLBV(int pagenum){
-        Pageable page= PageRequest.of(pagenum,20);
+    public List<LoaiBaiViet> hienThiLBV(int pagenum, int pagesize){
+        Pageable page= PageRequest.of(pagenum,pagesize);
         return loaibvRep.findAllBy(page);
     }
 

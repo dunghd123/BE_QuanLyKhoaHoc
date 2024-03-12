@@ -175,12 +175,12 @@ public class HocvienServices {
         }
         return check;
     }
-    public List<HocVien> hienThiDS(int pagenum){
-        Pageable pageable = PageRequest.of(pagenum,20);
+    public List<HocVien> hienThiDS(int pagenum,int pagesize){
+        Pageable pageable = PageRequest.of(pagenum,pagesize);
         return hocvienRep.findAllBy(pageable);
     }
-    public List<HocVien> timKiemtheoTen(String ten, int pagenum){
-        Pageable pageable = PageRequest.of(pagenum,20);
+    public List<HocVien> timKiemtheoTen(String ten, int pagenum,int pagesize){
+        Pageable pageable = PageRequest.of(pagenum,pagesize);
         return hocvienRep.findAllByHotenIsContainingIgnoreCase(ten,pageable);
     }
     public HocVien timKiemTheoEmail(String email){

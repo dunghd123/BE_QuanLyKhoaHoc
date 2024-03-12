@@ -83,12 +83,12 @@ public class BaivietServices {
         }
         return check;
     }
-    public List<BaiViet> danhSachBaiviet(int pagenum){
-        Pageable pageable= PageRequest.of(pagenum,20);
+    public List<BaiViet> danhSachBaiviet(int pagenum, int pagesize){
+        Pageable pageable= PageRequest.of(pagenum,pagesize);
         return baivietRep.findAllBy(pageable);
     }
-    public List<BaiViet> timKiemTheoTenBaiViet(String tenbv, int pagenum){
-        Pageable pageable= PageRequest.of(pagenum,20);
+    public List<BaiViet> timKiemTheoTenBaiViet(String tenbv, int pagenum, int pagesize){
+        Pageable pageable= PageRequest.of(pagenum,pagesize);
         return baivietRep.findAllByTenbaivietEquals(tenbv,pageable);
     }
 }

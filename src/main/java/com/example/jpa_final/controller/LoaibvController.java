@@ -35,7 +35,7 @@ public class LoaibvController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai loai bai viet co ma: "+loaibaivietid);
     }
     @GetMapping(value = "hienthiloaibaiviet")
-    public ResponseEntity<?> hienThiLBV(int pagenumber){
-        return ResponseEntity.ok(loaibvServices.hienThiLBV(pagenumber));
+    public ResponseEntity<?> hienThiLBV(@RequestParam  int pagenumber, @RequestParam int pagesize){
+        return ResponseEntity.ok(loaibvServices.hienThiLBV(pagenumber,pagesize));
     }
 }

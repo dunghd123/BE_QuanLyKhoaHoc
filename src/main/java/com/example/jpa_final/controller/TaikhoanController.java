@@ -39,8 +39,8 @@ public class TaikhoanController {
     }
 
     @GetMapping(value = "hienthidanhsachtk")
-    public List<TaiKhoan> hienthiDSTK(@RequestParam int pagenum){
-        return tkServices.hienDsTaikhoan(pagenum);
+    public List<TaiKhoan> hienthiDSTK(@RequestParam int pagenum, @RequestParam int pagesize){
+        return tkServices.hienDsTaikhoan(pagenum,pagesize);
     }
     @GetMapping(value = "timkiemtheotendn")
     public List<TaiKhoan> timkiemTheoTenDN(@RequestParam String tendn, @RequestParam Integer pagenum){

@@ -38,12 +38,12 @@ public class HocvienController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai hoc vien co id: "+hocvienid);
     }
     @GetMapping(value = "hienthidanhsachhocvien")
-    public List<HocVien> hienThiDsHv(int pagenum){
-        return hvServices.hienThiDS(pagenum);
+    public List<HocVien> hienThiDsHv( @RequestParam int pagenum,@RequestParam int pagesize){
+        return hvServices.hienThiDS(pagenum,pagesize);
     }
     @GetMapping(value = "timkiemtheoten")
-    public List<HocVien> timKiemTheoTen(@RequestParam String ten, @RequestParam int pagenum){
-        return hvServices.timKiemtheoTen(ten,pagenum);
+    public List<HocVien> timKiemTheoTen(@RequestParam String ten, @RequestParam int pagenum,@RequestParam int pagesize){
+        return hvServices.timKiemtheoTen(ten,pagenum,pagesize);
     }
     @GetMapping(value = "timkiemtheoemail")
     public HocVien timKiemTheoEmail(@RequestParam String email){

@@ -193,8 +193,8 @@ public class DangkyServices {
         }
         return check;
     }
-    public List<DangKyHoc> hienThiDKy(int pagenum){
-        Pageable pageable= PageRequest.of(pagenum,20);
+    public List<DangKyHoc> hienThiDKy(int pagenum,int pagesize){
+        Pageable pageable= PageRequest.of(pagenum,pagesize);
         return dangkyRep.findAllBy(pageable);
     }
 }

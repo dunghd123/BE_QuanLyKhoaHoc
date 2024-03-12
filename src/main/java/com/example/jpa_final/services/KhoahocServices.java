@@ -114,12 +114,12 @@ public class KhoahocServices {
         }
         return check;
     }
-    public List<KhoaHoc> hienthiDS(int pagenum){
-        Pageable pageable= PageRequest.of(pagenum,20);
+    public List<KhoaHoc> hienthiDS(int pagenum,int pagesize){
+        Pageable pageable= PageRequest.of(pagenum,pagesize);
         return khoahocRep.findAllBy(pageable);
     }
-    public List<KhoaHoc> timkiemtheoTenKH(String ten,int pagenum){
-        Pageable pageable= PageRequest.of(pagenum,20);
+    public List<KhoaHoc> timkiemtheoTenKH(String ten,int pagenum, int pagesize){
+        Pageable pageable= PageRequest.of(pagenum,pagesize);
         return khoahocRep.findAllByTenkhoahocEquals(ten,pageable);
     }
 }

@@ -65,8 +65,8 @@ public class ChudeServices {
         }
         return check;
     }
-    public List<ChuDe> hienthiChuDe(int pagenum){
-        Pageable pageable= PageRequest.of(pagenum,20);
+    public List<ChuDe> hienthiChuDe(int pagenum, int pagesize){
+        Pageable pageable= PageRequest.of(pagenum,pagesize);
         return chudeRep.findAllBy(pageable);
     }
 }

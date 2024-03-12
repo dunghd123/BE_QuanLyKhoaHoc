@@ -30,7 +30,7 @@ public class ChudeController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai chu de co ma: "+chudeid);
     }
     @GetMapping(value = "hienthichude")
-    public ResponseEntity<?> hienthiCD(@RequestParam int pagenum){
-        return ResponseEntity.ok(chudeServices.hienthiChuDe(pagenum));
+    public ResponseEntity<?> hienthiCD(@RequestParam int pagenum, @RequestParam int pagesize){
+        return ResponseEntity.ok(chudeServices.hienthiChuDe(pagenum,pagesize));
     }
 }

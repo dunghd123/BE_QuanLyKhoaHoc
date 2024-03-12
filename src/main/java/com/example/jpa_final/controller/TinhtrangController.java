@@ -36,7 +36,7 @@ public class TinhtrangController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong ton tai tinh trang co id: "+tthid);
     }
     @GetMapping(value = "hienthidanhsachtinhtranghoc")
-    public List<TinhTrangHoc> hienThiDSTTH(@RequestParam int pagenum){
-        return tthServices.hienThiDS(pagenum);
+    public List<TinhTrangHoc> hienThiDSTTH(@RequestParam int pagenum,@RequestParam int pagesize){
+        return tthServices.hienThiDS(pagenum,pagesize);
     }
 }
