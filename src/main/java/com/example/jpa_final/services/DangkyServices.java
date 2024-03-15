@@ -34,7 +34,7 @@ public class DangkyServices {
     KhoahocServices khoahocServices;
     ValidatorFactory valFac= Validation.buildDefaultValidatorFactory();
     Validator val= valFac.getValidator();
-    public static Date tinhNgayKetThuc(Date ngaybd,int thoigianhoc){
+        public static Date tinhNgayKetThuc(Date ngaybd,int thoigianhoc){
         LocalDate localDateBatDau = ngaybd.toLocalDate();
         LocalDate localDateKetThuc = localDateBatDau.plusDays(thoigianhoc);
         return Date.valueOf(localDateKetThuc);
@@ -195,6 +195,18 @@ public class DangkyServices {
     }
     public List<DangKyHoc> hienThiDKy(int pagenum,int pagesize){
         Pageable pageable= PageRequest.of(pagenum,pagesize);
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        for(DangKyHoc dk: dangkyRep.findAll()){
+            if(dk.getNgayketthuc().compareTo(date)<=0){
+                TinhTrangHoc tth1= tinhtranghocRep.findById(3).get();
+                dk.setTinhTrangHoc(tth1);
+            }else {
+                TinhTrangHoc tth2= tinhtranghocRep.findById(2).get();
+                dk.setTinhTrangHoc(tth2);
+            }
+            dangkyRep.save(dk);
+        }
         return dangkyRep.findAllBy(pageable);
     }
 }
