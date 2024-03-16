@@ -132,9 +132,9 @@ public class DangkyServices {
             }
         }
         //set lai ngay ket thuc
-        dkUpdate.setNgaydangky(date);
+        dkUpdate.setNgaydangky(dkCurrent.getNgaydangky());
         if(dkUpdate.getTinhTrangHoc().getTinhtranghocID()==getIdDangHocChinh){
-            dkUpdate.setNgaybatdau(date);
+            dkUpdate.setNgaybatdau(dkCurrent.getNgaybatdau());
         }else {
             dkUpdate.setNgaybatdau(null);
         }
