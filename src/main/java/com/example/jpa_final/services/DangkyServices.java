@@ -105,8 +105,6 @@ public class DangkyServices {
     }
     public boolean suaDangKy(DangKyHoc dangKyHoc){
         boolean check=true;
-        long millis = System.currentTimeMillis();
-        Date date = new Date(millis);
         DangKyHoc dkCurrent=dangkyRep.findById(dangKyHoc.getId()).get();
         int dkid= dkCurrent.getId();
         int khid=0;
